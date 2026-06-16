@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Survivor Engine | Golden Hidden Channel</title>
+    <style>
+        :root { --gold: #c5a059; --dark: #121212; }
+        body { background: var(--dark); color: white; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; padding: 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; width: 100%; max-width: 800px; margin-top: 20px; }
+        .card { border: 1px solid #333; padding: 20px; text-align: center; cursor: pointer; transition: 0.3s; }
+        .card.selected { border-color: var(--gold); background: #1a1a1a; }
+        button { background: var(--gold); color: black; border: none; padding: 15px 30px; font-weight: bold; cursor: pointer; margin-top: 30px; }
+    </style>
+</head>
+<body>
+
+    <h1>Select Your 2 Survivors</h1>
+    <form id="survivorForm" action="https://formspree.io/f/YOUR_ID_HERE" method="POST">
+        <div class="grid" id="movieGrid">
+            <!-- Movie Data -->
+            <div class="card" onclick="toggleSelection(this)" data-name="John Wick">John Wick</div>
+            <div class="card" onclick="toggleSelection(this)" data-name="The Equalizer">The Equalizer</div>
+            <div class="card" onclick="toggleSelection(this)" data-name="Nobody">Nobody</div>
+            <div class="card" onclick="toggleSelection(this)" data-name="Extraction">Extraction</div>
+            <div class="card" onclick="toggleSelection(this)" data-name="Wrath of Man">Wrath of Man</div>
+            <div class="card" onclick="toggleSelection(this)" data-name="The Beekeeper">The Beekeeper</div>
+        </div>
+        <input type="hidden" name="selections" id="selectionsInput">
+        <button type="submit">Submit My Choices</button>
+    </form>
+
+    <script>
+        let selected = [];
+        function toggleSelection(el) {
+            const name = el.getAttribute('data-name');
+            if (selected.includes(name)) {
+                selected = selected.filter(s => s !== name);
+                el.classList.remove('selected');
+            } else if (selected.length < 2) {
+                selected.push(name);
+                el.classList.add('selected');
+            } else {
+                alert("Only 2 can survive. Deselect one first.");
+            }
+            document.getElementById('selectionsInput').value = selected.join(', ');
+        }
+    </script>
+</body>
+</html>
